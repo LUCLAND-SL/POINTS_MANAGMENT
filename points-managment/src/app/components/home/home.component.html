@@ -1,1 +1,20 @@
-<p>home works!</p>
+<app-navbar></app-navbar>
+<p>klk</p>
+<table>
+    <thead>
+        <tr>
+            <th>Cuadrilla</th>
+            <th>Trabajador</th>
+            <th>Puesto</th>
+            <th>Puntos</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let row of data">
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>{{ row[3] }}</td>
+        </tr>
+    </tbody>
+</table>
