@@ -8,6 +8,12 @@ import { HistoricoComponent } from './components/historico/historico.component';
 import { NormasComponent } from './components/normas/normas.component';
 import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
 
 
 @NgModule({
@@ -20,7 +26,13 @@ import { AppRoutingModule } from './app-routing.module';
     HistoricoComponent,
     NormasComponent,
     CommonModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTableModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: []

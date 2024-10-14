@@ -1,20 +1,43 @@
-<app-navbar></app-navbar>
-<p>klk</p>
-<table>
-    <thead>
-        <tr>
-            <th>Cuadrilla</th>
-            <th>Trabajador</th>
-            <th>Puesto</th>
-            <th>Puntos</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let row of data">
-            <td>{{ row[0] }}</td>
-            <td>{{ row[1] }}</td>
-            <td>{{ row[2] }}</td>
-            <td>{{ row[3] }}</td>
-        </tr>
-    </tbody>
-</table>
+<mat-toolbar color="primary">
+  <span>{{ currentMonthYear }}</span>
+</mat-toolbar>
+<br>
+<div *ngFor="let cuadrilla of getCuadrillasKeys()">
+    <mat-card>
+      <mat-card-title>
+        <span class="subrayado-negrita">{{ cuadrilla }}</span>
+      </mat-card-title>
+      <br>
+      <mat-card-content>
+        <table mat-table [dataSource]="cuadrillas[cuadrilla]" class="mat-elevation-z8">
+          <ng-container matColumnDef="trabajador">
+            <th mat-header-cell *matHeaderCellDef> Trabajador </th>
+            <td mat-cell *matCellDef="let element"> {{element.trabajador}} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="puesto">
+            <th mat-header-cell *matHeaderCellDef> Puesto </th>
+            <td mat-cell *matCellDef="let element"> {{element.puesto}} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="puntos">
+            <th mat-header-cell *matHeaderCellDef> Puntos </th>
+            <td mat-cell *matCellDef="let element"> {{element.puntos}} </td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="['trabajador', 'puesto', 'puntos']" class="mat-header-row"></tr>
+          <tr mat-row *matRowDef="let row; columns: ['trabajador', 'puesto', 'puntos'];" class="mat-row"></tr>
+        </table>
+        <hr>
+        <p>Puntos actuales en total de cuadrilla: <strong>{{ puntosTotales[cuadrilla] }}</strong></p>
+        <p>Puntos restantes para este mes: 
+            <span [ngClass]="{'rojo': getPuntosRestantes(cuadrilla) < 925 && getPuntosRestantes(cuadrilla) > 0, 'verde-oscuro': getPuntosRestantes(cuadrilla) <= 0}">
+              <strong>{{ getPuntosRestantes(cuadrilla) }}</strong>
+            </span>
+        </p>
+      </mat-card-content>
+    </mat-card>
+    <br>
+  </div>
+  
+  

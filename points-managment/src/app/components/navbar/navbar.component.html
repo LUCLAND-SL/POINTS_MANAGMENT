@@ -1,12 +1,14 @@
-<nav class="navbar">
+<mat-toolbar color="primary">
     <div class="navbar-left">
-        <img src="assets/LUCLAND-NO-BAK-WHITE.png" alt="Logo">
-        <span class="navbar-title">CONTROL DE PUNTOS</span>
+      <img src="assets/LUCLAND-NO-BAK-WHITE.png" alt="Logo" class="navbar-logo">
+      <span class="navbar-title">CONTROL DE PUNTOS</span>
     </div>
+    <span class="spacer"></span>
     <div class="navbar-right">
-        <a routerLink="/home">Home</a>
-        <a routerLink="/login">Login</a>
-        <a routerLink="/historico">Historico</a>
-        <a routerLink="/normas">Normas</a>
+      <a mat-button (click)="navigateToHome()">Home</a>
+      <a mat-button (click)="navigateToLogin()">Login</a>
+      <a mat-button (click)="navigateToHistorico()">Historico</a>
+      <a mat-button (click)="navigateToNormas()">Normas</a>
     </div>
-</nav>
+  </mat-toolbar>
+  

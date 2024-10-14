@@ -2,35 +2,100 @@ import { Component, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { CommonModule } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
+
+interface Trabajador {
+  trabajador: string;
+  puesto: string;
+  puntos: number;
+}
+
+interface Cuadrillas {
+  [key: string]: Trabajador[];
+}
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NavbarComponent, CommonModule],
+  imports: [NavbarComponent, CommonModule, MatTableModule, MatCardModule, MatToolbarModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  data: any[] = []
+  cuadrillas: Cuadrillas = {};
+  puntosTotales: { [key: string]: number } = {};
+  currentMonthYear: string = "";
 
-  constructor() {}
-
-  ngOnInit(): void {
-    this.loadExcelData()
+  constructor() {
+    this.currentMonthYear = this.getCurrentMonthYear();
   }
 
-  loadExcelData() {
+  getCurrentMonthYear(): string{
+    const fechaActual = new Date();
+    const meses = [
+      'ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO',
+      'JULIO', 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE'
+    ];
+    const mes = meses[fechaActual.getMonth()];
+    const año = fechaActual.getFullYear();
+    return `${mes} ${año}`;
+  }
+
+  ngOnInit(): void {
+    this.readExcel()
+  }
+
+  readExcel() {
     const url = 'assets/PuntosTrabajadores2024.xlsx';
-    fetch(url)
-      .then(response => response.arrayBuffer())
-      .then(data => {
-        const workbook = XLSX.read(data, { type: 'array' });
-        const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-        this.data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-      })
-      .catch(error => {
-        console.error('Error al cargar el archivo Excel:', error);
+    const oReq = new XMLHttpRequest();
+    oReq.open('GET', url, true);
+    oReq.responseType = 'arraybuffer';
+
+    oReq.onload = (e) => {
+      const arraybuffer = oReq.response;
+      const data = new Uint8Array(arraybuffer);
+      const arr = new Array();
+      for (let i = 0; i !== data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+      const bstr = arr.join('');
+      const workbook = XLSX.read(bstr, { type: 'binary' });
+      const worksheet = workbook.Sheets['Mes actual'];
+      const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+      this.processData(jsonData);
+    };
+
+    oReq.send();
+  }
+
+  processData(data: any) {
+    const headers = data[0];
+    const rows = data.slice(1);
+
+    rows.forEach((row: any) => {
+      const cuadrilla = row[0];
+      if (!this.cuadrillas[cuadrilla]) {
+        this.cuadrillas[cuadrilla] = [];
+        this.puntosTotales[cuadrilla] = 0;
+      }
+
+      const puntos = row[3];
+      this.cuadrillas[cuadrilla].push({
+        trabajador: row[1],
+        puesto: row[2],
+        puntos: row[3]
       });
+      this.puntosTotales[cuadrilla] += puntos;
+    });
+  }
+
+  getCuadrillasKeys(): string[] {
+    return Object.keys(this.cuadrillas);
+  }
+
+  getPuntosRestantes(cuadrilla: string): number {
+    return 925 - this.puntosTotales[cuadrilla];
   }
 }
 
