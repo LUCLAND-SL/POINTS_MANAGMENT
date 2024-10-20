@@ -15,18 +15,13 @@
             <td mat-cell *matCellDef="let element"> {{element.trabajador}} </td>
           </ng-container>
   
-          <ng-container matColumnDef="puesto">
-            <th mat-header-cell *matHeaderCellDef> Puesto </th>
-            <td mat-cell *matCellDef="let element"> {{element.puesto}} </td>
-          </ng-container>
-  
           <ng-container matColumnDef="puntos">
             <th mat-header-cell *matHeaderCellDef> Puntos </th>
             <td mat-cell *matCellDef="let element"> {{element.puntos}} </td>
           </ng-container>
   
-          <tr mat-header-row *matHeaderRowDef="['trabajador', 'puesto', 'puntos']" class="mat-header-row"></tr>
-          <tr mat-row *matRowDef="let row; columns: ['trabajador', 'puesto', 'puntos'];" class="mat-row"></tr>
+          <tr mat-header-row *matHeaderRowDef="['trabajador', 'puntos']" class="mat-header-row"></tr>
+          <tr mat-row *matRowDef="let row; columns: ['trabajador', 'puntos'];" class="mat-row"></tr>
         </table>
         <hr>
         <p>Puntos actuales en total de cuadrilla: <strong>{{ puntosTotales[cuadrilla] }}</strong></p>

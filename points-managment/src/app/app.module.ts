@@ -14,6 +14,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
+import { EmpalmadoresComponent } from './components/empalmadores/empalmadores.component';
+import { FormsModule } from '@angular/forms';
+
 
 
 @NgModule({
@@ -25,6 +28,7 @@ import { MatCardModule } from '@angular/material/card';
     NavbarComponent,
     HistoricoComponent,
     NormasComponent,
+    EmpalmadoresComponent,
     CommonModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -32,7 +36,8 @@ import { MatCardModule } from '@angular/material/card';
     MatButtonModule,
     MatIconModule,
     MatTableModule,
-    MatCardModule
+    MatCardModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: []

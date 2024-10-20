@@ -8,7 +8,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 interface Trabajador {
   trabajador: string;
-  puesto: string;
   puntos: number;
 }
 
@@ -60,7 +59,7 @@ export class HomeComponent {
       for (let i = 0; i !== data.length; ++i) arr[i] = String.fromCharCode(data[i]);
       const bstr = arr.join('');
       const workbook = XLSX.read(bstr, { type: 'binary' });
-      const worksheet = workbook.Sheets['Mes actual'];
+      const worksheet = workbook.Sheets['Mes actual cel'];
       const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
       this.processData(jsonData);
@@ -80,11 +79,10 @@ export class HomeComponent {
         this.puntosTotales[cuadrilla] = 0;
       }
 
-      const puntos = row[3];
+      const puntos = row[2];
       this.cuadrillas[cuadrilla].push({
         trabajador: row[1],
-        puesto: row[2],
-        puntos: row[3]
+        puntos: row[2]
       });
       this.puntosTotales[cuadrilla] += puntos;
     });
