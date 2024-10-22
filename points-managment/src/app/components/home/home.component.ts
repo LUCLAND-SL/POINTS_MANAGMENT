@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { NavbarService } from '../navbar/navbar.service';
+import { AppLogic } from '../../logic/AppLogic';
 
 interface Trabajador {
   trabajador: string;
@@ -26,8 +28,9 @@ export class HomeComponent {
   cuadrillas: Cuadrillas = {};
   puntosTotales: { [key: string]: number } = {};
   currentMonthYear: string = "";
+  showNotificationButton: boolean = false;
 
-  constructor() {
+  constructor(private navbarService: NavbarService, private logicApp: AppLogic) {
     this.currentMonthYear = this.getCurrentMonthYear();
   }
 
@@ -44,6 +47,7 @@ export class HomeComponent {
 
   ngOnInit(): void {
     this.readExcel()
+    this.showNotificationButton = this.navbarService.getShowNotification();
   }
 
   readExcel() {
@@ -94,6 +98,11 @@ export class HomeComponent {
 
   getPuntosRestantes(cuadrilla: string): number {
     return 925 - this.puntosTotales[cuadrilla];
+  }
+
+  generatePDF()
+  {
+    this.logicApp.generarPDF("Lucas","Gutiérrez Prada","34294722C", 98);
   }
 }
 
