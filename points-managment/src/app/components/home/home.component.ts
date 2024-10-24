@@ -102,7 +102,7 @@ export class HomeComponent {
 
   generatePDF()
   {
-    this.logicApp.generarPDF("Lucas","Gutiérrez Prada","34294722C", 98);
+    this.logicApp.generarPDF("Lucas Gutiérrez Prada","34294722C", 98);
   }
 }
 
