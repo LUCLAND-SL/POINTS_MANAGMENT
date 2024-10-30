@@ -5,8 +5,12 @@ import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatFormField } from '@angular/material/form-field';
+import { MatLabel } from '@angular/material/form-field';
 import { NavbarService } from '../navbar/navbar.service';
 import { AppLogic } from '../../logic/AppLogic';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 interface Trabajador {
   trabajador: string;
@@ -20,7 +24,7 @@ interface Cuadrillas {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NavbarComponent, CommonModule, MatTableModule, MatCardModule, MatToolbarModule],
+  imports: [NavbarComponent, CommonModule, MatTableModule, MatCardModule, MatToolbarModule, MatFormField, MatLabel, MatInputModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -29,6 +33,9 @@ export class HomeComponent {
   puntosTotales: { [key: string]: number } = {};
   currentMonthYear: string = "";
   showNotificationButton: boolean = false;
+  nombreApelldos: string = "";
+  dni: string = "";
+  puntos: number = 0;
 
   constructor(private navbarService: NavbarService, private logicApp: AppLogic) {
     this.currentMonthYear = this.getCurrentMonthYear();
@@ -102,7 +109,7 @@ export class HomeComponent {
 
   generatePDF()
   {
-    this.logicApp.generarPDF("Lucas Gutiérrez Prada","34294722C", 98);
+    this.logicApp.generarPDF(this.nombreApelldos,this.dni, this.puntos);
   }
 }
 

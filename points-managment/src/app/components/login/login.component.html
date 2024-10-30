@@ -1,14 +1,16 @@
 <div class="login-container">
-    <form (ngSubmit)="onSubmit()">
-      <mat-form-field>
-        <mat-label>Usuario</mat-label>
-        <input matInput [(ngModel)]="username" name="username" required>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Contraseña</mat-label>
-        <input matInput [(ngModel)]="password" name="password" type="password" required>
-      </mat-form-field>
+  <form (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Usuario</mat-label>
+      <input matInput [(ngModel)]="username" name="username" required>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Contraseña</mat-label>
+      <input matInput [(ngModel)]="password" name="password" type="password" required>
+    </mat-form-field>
+    <div class="button-container">
       <button mat-raised-button color="accent" type="submit">Login</button>
-    </form>
-    <p *ngIf="errorMessage">{{ errorMessage }}</p>
-  </div>
+    </div>
+  </form>
+  <p *ngIf="errorMessage">{{ errorMessage }}</p>
+</div>
