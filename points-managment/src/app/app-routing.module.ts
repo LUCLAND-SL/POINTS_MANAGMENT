@@ -7,7 +7,7 @@ import { NormasComponent } from "./components/normas/normas.component";
 import { EmpalmadoresComponent } from "./components/empalmadores/empalmadores.component";
 import { HistoricoEmpComponent } from "./components/historico-emp/historico-emp.component";
 
-export const routesDef: Routes = [
+const routesDef: Routes = [
     { path: 'home', component: HomeComponent},
     { path: 'login', component: LoginComponent},
     { path: 'historico', component: HistoricoComponent},
