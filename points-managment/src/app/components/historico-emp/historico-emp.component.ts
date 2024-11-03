@@ -25,13 +25,13 @@ interface Mes {
 }
 
 @Component({
-  selector: 'app-historico',
+  selector: 'app-historico-emp',
   standalone: true,
   imports: [NavbarComponent, CommonModule, MatTableModule, MatCardModule, MatToolbarModule, MatFormField, MatLabel, MatInputModule, FormsModule, MatExpansionModule],
-  templateUrl: './historico.component.html',
-  styleUrl: './historico.component.css'
+  templateUrl: './historico-emp.component.html',
+  styleUrl: './historico-emp.component.css'
 })
-export class HistoricoComponent {
+export class HistoricoEmpComponent {
   cuadrillas: Cuadrillas = {};
   puntosTotales: { [key: string]: number } = {};
   historico: Mes = {};
@@ -53,7 +53,7 @@ export class HistoricoComponent {
       for (let i = 0; i !== data.length; ++i) arr[i] = String.fromCharCode(data[i]);
       const bstr = arr.join('');
       const workbook = XLSX.read(bstr, { type: 'binary' });
-      const worksheet = workbook.Sheets['Historico CEL'];
+      const worksheet = workbook.Sheets['Historico EMP'];
       const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
       this.processData(jsonData);
@@ -98,5 +98,4 @@ export class HistoricoComponent {
   getCuadrillasKeys(): string[] {
     return Object.keys(this.cuadrillas);
   }
-
 }

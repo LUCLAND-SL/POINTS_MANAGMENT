@@ -16,6 +16,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { EmpalmadoresComponent } from './components/empalmadores/empalmadores.component';
 import { FormsModule } from '@angular/forms';
+import { HistoricoEmpComponent } from './components/historico-emp/historico-emp.component';
 
 
 
@@ -37,7 +38,8 @@ import { FormsModule } from '@angular/forms';
     MatIconModule,
     MatTableModule,
     MatCardModule,
-    FormsModule
+    FormsModule,
+    HistoricoEmpComponent
   ],
   providers: [],
   bootstrap: []

@@ -41,4 +41,8 @@ export class NavbarComponent {
     this.router.navigate(['/empalmador']);
   }
 
+  navigateToHistoricoEmpalmadores() {
+    this.router.navigate(['/historico-emp']);
+  }
+
 }

@@ -92,6 +92,6 @@ getCuadrillasKeys(): string[] {
 }
 
 getPuntosRestantes(cuadrilla: string): number {
-  return 925 - this.puntosTotales[cuadrilla];
+  return 260 - this.puntosTotales[cuadrilla];
 }
 }
