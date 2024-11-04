@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import * as XLSX from 'xlsx';
+import { HttpClient } from '@angular/common/http';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
@@ -11,6 +12,8 @@ import { NavbarService } from '../navbar/navbar.service';
 import { AppLogic } from '../../logic/AppLogic';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
+import { RouterOutlet, Router } from '@angular/router';
 
 interface Trabajador {
   trabajador: string;
@@ -24,11 +27,11 @@ interface Cuadrillas {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NavbarComponent, CommonModule, MatTableModule, MatCardModule, MatToolbarModule, MatFormField, MatLabel, MatInputModule, FormsModule],
+  imports: [NavbarComponent, CommonModule, MatTableModule, MatCardModule, MatToolbarModule, MatFormField, MatLabel, MatInputModule, FormsModule, RouterOutlet],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit, AfterViewInit {
   cuadrillas: Cuadrillas = {};
   puntosTotales: { [key: string]: number } = {};
   currentMonthYear: string = "";
@@ -36,12 +39,13 @@ export class HomeComponent {
   nombreApelldos: string = "";
   dni: string = "";
   puntos: number = 0;
+  private dataSubject = new BehaviorSubject<any[]>([]);
 
-  constructor(private navbarService: NavbarService, private logicApp: AppLogic) {
+  constructor(private navbarService: NavbarService, private logicApp: AppLogic, private http: HttpClient, private cdr: ChangeDetectorRef, private router: Router) {
     this.currentMonthYear = this.getCurrentMonthYear();
   }
 
-  getCurrentMonthYear(): string{
+  getCurrentMonthYear(): string {
     const fechaActual = new Date();
     const meses = [
       'ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO',
@@ -50,33 +54,33 @@ export class HomeComponent {
     const mes = meses[fechaActual.getMonth()];
     const año = fechaActual.getFullYear();
     return `${mes} ${año}`;
-  }
+  }
 
   ngOnInit(): void {
-    this.readExcel()
     this.showNotificationButton = this.navbarService.getShowNotification();
+  }
+
+  ngAfterViewInit(): void {
+    this.readExcel();
+    this.dataSubject.subscribe(data => {
+      if (data.length > 0) {
+        this.processData(data);
+        this.cdr.detectChanges();
+      }
+    });
   }
 
   readExcel() {
     const url = 'assets/PuntosTrabajadores2024.xlsx';
-    const oReq = new XMLHttpRequest();
-    oReq.open('GET', url, true);
-    oReq.responseType = 'arraybuffer';
-
-    oReq.onload = (e) => {
-      const arraybuffer = oReq.response;
-      const data = new Uint8Array(arraybuffer);
-      const arr = new Array();
-      for (let i = 0; i !== data.length; ++i) arr[i] = String.fromCharCode(data[i]);
-      const bstr = arr.join('');
+    this.http.get(url, { responseType: 'arraybuffer' }).subscribe((data: ArrayBuffer) => {
+      const arr = Array.from(new Uint8Array(data));
+      const bstr = String.fromCharCode.apply(null, arr);
       const workbook = XLSX.read(bstr, { type: 'binary' });
       const worksheet = workbook.Sheets['Mes actual cel'];
       const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-
-      this.processData(jsonData);
-    };
-
-    oReq.send();
+      console.log('Datos procesados:', jsonData);
+      this.dataSubject.next(jsonData);
+    });
   }
 
   processData(data: any) {
@@ -97,6 +101,7 @@ export class HomeComponent {
       });
       this.puntosTotales[cuadrilla] += puntos;
     });
+    this.cdr.detectChanges();
   }
 
   getCuadrillasKeys(): string[] {
@@ -107,10 +112,7 @@ export class HomeComponent {
     return 860 - this.puntosTotales[cuadrilla];
   }
 
-  generatePDF()
-  {
-    this.logicApp.generarPDF(this.nombreApelldos,this.dni, this.puntos);
+  generatePDF() {
+    this.logicApp.generarPDF(this.nombreApelldos, this.dni, this.puntos);
   }
 }
-
-

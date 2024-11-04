@@ -13,5 +13,5 @@ export const routes: Routes = [
     { path: 'normas', component: NormasComponent},
     { path: 'empalmador', component: EmpalmadoresComponent},
     { path: 'historico-emp', component: HistoricoEmpComponent},
-    { path: '', redirectTo: '/home', pathMatch: 'full'}
+    { path: '', redirectTo: '/normas', pathMatch: 'full'}
 ];
