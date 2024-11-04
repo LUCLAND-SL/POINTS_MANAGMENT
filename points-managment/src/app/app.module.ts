@@ -1,4 +1,3 @@
-// app/app.module.ts
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
@@ -18,30 +17,27 @@ import { EmpalmadoresComponent } from './components/empalmadores/empalmadores.co
 import { FormsModule } from '@angular/forms';
 import { HistoricoEmpComponent } from './components/historico-emp/historico-emp.component';
 
-
-
 @NgModule({
   declarations: [],
   imports: [
-    BrowserModule,
     AppComponent,
     HomeComponent,
     NavbarComponent,
     HistoricoComponent,
     NormasComponent,
     EmpalmadoresComponent,
-    CommonModule,
-    AppRoutingModule,
+    HistoricoEmpComponent
+  ],
+  providers: [ BrowserModule,
     BrowserAnimationsModule,
+    CommonModule,
+    FormsModule,
+    AppRoutingModule,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
     MatTableModule,
-    MatCardModule,
-    FormsModule,
-    HistoricoEmpComponent
-  ],
-  providers: [],
+    MatCardModule],
   bootstrap: []
 })
 export class AppModule { }

@@ -7,9 +7,14 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [MatToolbarModule, RouterOutlet, CommonModule],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    MatToolbarModule
+  ],
+  providers: [],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
   welcomeMessage: string = '';
@@ -18,7 +23,6 @@ export class NavbarComponent {
     this.navbarService.welcomeMessage$.subscribe(message => {
       this.welcomeMessage = message;
     });
-
   }
 
   navigateToHome() {
@@ -44,5 +48,4 @@ export class NavbarComponent {
   navigateToHistoricoEmpalmadores() {
     this.router.navigate(['/historico-emp']);
   }
-
 }

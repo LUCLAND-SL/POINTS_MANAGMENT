@@ -33,6 +33,7 @@
               "src/styles.css"
             ],
             "scripts": [],
+            "baseHref": "/POINTS_MANAGMENT/",
             "server": "src/main.server.ts",
             "prerender": true,
             "ssr": {
@@ -74,6 +75,12 @@
             }
           },
           "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "routes": ["/"]
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n"

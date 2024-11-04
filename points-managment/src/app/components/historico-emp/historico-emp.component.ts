@@ -27,7 +27,8 @@ interface Mes {
 @Component({
   selector: 'app-historico-emp',
   standalone: true,
-  imports: [NavbarComponent, CommonModule, MatTableModule, MatCardModule, MatToolbarModule, MatFormField, MatLabel, MatInputModule, FormsModule, MatExpansionModule],
+  imports: [MatExpansionModule, CommonModule],
+  providers: [NavbarComponent, FormsModule, MatTableModule, MatCardModule, MatToolbarModule, MatFormField, MatLabel, MatInputModule],
   templateUrl: './historico-emp.component.html',
   styleUrl: './historico-emp.component.css'
 })
