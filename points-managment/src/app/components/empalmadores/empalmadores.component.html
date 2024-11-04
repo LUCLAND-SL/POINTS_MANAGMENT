@@ -26,7 +26,7 @@
           <hr>
           <p>Puntos actuales en total de cuadrilla: <strong>{{ puntosTotales[cuadrilla] }}</strong></p>
           <p>Puntos restantes para este mes: 
-              <span [ngClass]="{'rojo': getPuntosRestantes(cuadrilla) < 260 && getPuntosRestantes(cuadrilla) > 0, 'verde-oscuro': getPuntosRestantes(cuadrilla) <= 0}">
+              <span [ngClass]="{'rojo': getPuntosRestantes(cuadrilla) < 460 && getPuntosRestantes(cuadrilla) > 0, 'verde-oscuro': getPuntosRestantes(cuadrilla) <= 0}">
                 <strong>{{ getPuntosRestantes(cuadrilla) }}</strong>
               </span>
           </p>

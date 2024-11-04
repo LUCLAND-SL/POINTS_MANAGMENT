@@ -104,7 +104,7 @@ export class HomeComponent {
   }
 
   getPuntosRestantes(cuadrilla: string): number {
-    return 600 - this.puntosTotales[cuadrilla];
+    return 860 - this.puntosTotales[cuadrilla];
   }
 
   generatePDF()
