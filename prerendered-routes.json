@@ -1,0 +1,10 @@
+{
+  "routes": [
+    "/empalmador",
+    "/historico",
+    "/historico-emp",
+    "/home",
+    "/login",
+    "/normas"
+  ]
+}
