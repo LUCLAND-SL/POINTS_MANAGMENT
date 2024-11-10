@@ -107,7 +107,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   getPuntosRestantes(cuadrilla: string): number {
-    return 860 - this.puntosTotales[cuadrilla];
+    const puntosRestantes = 860 - this.puntosTotales[cuadrilla]; 
+    return parseFloat(puntosRestantes.toFixed(2));
   }
 
   generatePDF() {

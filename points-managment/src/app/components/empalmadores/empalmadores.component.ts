@@ -92,6 +92,8 @@ getCuadrillasKeys(): string[] {
 }
 
 getPuntosRestantes(cuadrilla: string): number {
-  return 460 - this.puntosTotales[cuadrilla];
+  const puntosRestantes = 460 - this.puntosTotales[cuadrilla];
+  return parseFloat(puntosRestantes.toFixed(2));
 }
+
 }
