@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import * as XLSX from 'xlsx';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { CommonModule } from '@angular/common';
@@ -10,6 +10,8 @@ import { MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 interface Trabajador {
   trabajador: string;
@@ -36,31 +38,31 @@ export class HistoricoEmpComponent {
   cuadrillas: Cuadrillas = {};
   puntosTotales: { [key: string]: number } = {};
   historico: Mes = {};
+  private dataSubject = new BehaviorSubject<any[]>([]);
+
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {
+  }
 
   ngOnInit(): void {
     this.readExcel();
+    this.dataSubject.subscribe(data => {
+      if (data.length > 0) {
+        this.processData(data);
+        this.cdr.detectChanges();
+      }
+    });
   }
 
   readExcel() {
     const url = 'assets/PuntosTrabajadores2024.xlsx';
-    const oReq = new XMLHttpRequest();
-    oReq.open('GET', url, true);
-    oReq.responseType = 'arraybuffer';
-
-    oReq.onload = (e) => {
-      const arraybuffer = oReq.response;
-      const data = new Uint8Array(arraybuffer);
-      const arr = new Array();
-      for (let i = 0; i !== data.length; ++i) arr[i] = String.fromCharCode(data[i]);
-      const bstr = arr.join('');
+    this.http.get(url, { responseType: 'arraybuffer' }).subscribe((data: ArrayBuffer) => {
+      const arr = Array.from(new Uint8Array(data));
+      const bstr = String.fromCharCode.apply(null, arr);
       const workbook = XLSX.read(bstr, { type: 'binary' });
       const worksheet = workbook.Sheets['Historico EMP'];
       const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-
-      this.processData(jsonData);
-    };
-
-    oReq.send();
+      this.dataSubject.next(jsonData);
+    });
   }
 
   processData(data: any) {

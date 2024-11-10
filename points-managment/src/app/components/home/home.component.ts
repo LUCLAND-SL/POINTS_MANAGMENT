@@ -13,7 +13,6 @@ import { AppLogic } from '../../logic/AppLogic';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
-import { RouterOutlet, Router } from '@angular/router';
 
 interface Trabajador {
   trabajador: string;
@@ -27,7 +26,7 @@ interface Cuadrillas {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NavbarComponent, CommonModule, MatTableModule, MatCardModule, MatToolbarModule, MatFormField, MatLabel, MatInputModule, FormsModule, RouterOutlet],
+  imports: [NavbarComponent, CommonModule, MatTableModule, MatCardModule, MatToolbarModule, MatFormField, MatLabel, MatInputModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -41,7 +40,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   puntos: number = 0;
   private dataSubject = new BehaviorSubject<any[]>([]);
 
-  constructor(private navbarService: NavbarService, private logicApp: AppLogic, private http: HttpClient, private cdr: ChangeDetectorRef, private router: Router) {
+  constructor(private navbarService: NavbarService, private logicApp: AppLogic, private http: HttpClient, private cdr: ChangeDetectorRef) {
     this.currentMonthYear = this.getCurrentMonthYear();
   }
 
@@ -78,7 +77,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
       const workbook = XLSX.read(bstr, { type: 'binary' });
       const worksheet = workbook.Sheets['Mes actual cel'];
       const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-      console.log('Datos procesados:', jsonData);
       this.dataSubject.next(jsonData);
     });
   }
