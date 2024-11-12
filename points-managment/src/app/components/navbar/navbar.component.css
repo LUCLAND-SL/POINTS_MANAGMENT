@@ -6,6 +6,7 @@
   .navbar-logo {
     height: 40px;
     margin-right: 16px;
+    margin-left: 16px;
   }
   
   .navbar-title {
@@ -28,3 +29,27 @@
   .spacer {
     flex: 1 1 auto;
   }
+
+  .sidenav-container {
+    transition: height 0.3s ease;
+  }
+  
+  .sidenav-container.expanded {
+    height: 18%;
+  }
+  
+  .sidenav-container.collapsed {
+    height: 2%;
+  }
+  
+  .mobile-menu {
+    width: 250px;
+    height: auto;
+    max-height: 20vh;
+    overflow-y: auto;
+  }
+  
+  
+  
+  
+  

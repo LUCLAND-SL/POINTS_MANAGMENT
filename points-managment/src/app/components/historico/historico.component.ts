@@ -95,8 +95,10 @@ export class HistoricoComponent {
   }
 
   getTotalPuntos(cuadrilla: Trabajador[]): number {
-    return cuadrilla.reduce((total, trabajador) => total + trabajador.puntos, 0);
+    const total = cuadrilla.reduce((total, trabajador) => total + trabajador.puntos, 0);
+    return parseFloat(total.toFixed(2));
   }
+  
 
   getCuadrillasKeys(): string[] {
     return Object.keys(this.cuadrillas);

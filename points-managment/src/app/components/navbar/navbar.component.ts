@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterOutlet, Router } from '@angular/router';
 import { NavbarService } from './navbar.service';
 import { CommonModule } from '@angular/common';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenav } from '@angular/material/sidenav';
+
 
 @Component({
   selector: 'app-navbar',
@@ -10,14 +14,19 @@ import { CommonModule } from '@angular/common';
   imports: [
     CommonModule,
     RouterOutlet,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule
   ],
   providers: [],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
+  @ViewChild('sidenav') sidenav!: MatSidenav;
   welcomeMessage: string = '';
+  isMobile: boolean = false;
+  isSidenavOpen: boolean = false;
 
   constructor(private router: Router, private navbarService: NavbarService) {
     this.navbarService.welcomeMessage$.subscribe(message => {
@@ -25,6 +34,12 @@ export class NavbarComponent {
     });
   }
 
+  toggleSidenav() { if (this.sidenav) { this.sidenav.toggle(); } } 
+  
+  onSidenavOpen() { this.isSidenavOpen = true; } 
+  
+  onSidenavClose() { this.isSidenavOpen = false; }
+  
   navigateToHome() {
     this.router.navigate(['/home']);
   }

@@ -1,18 +1,27 @@
 <mat-toolbar color="primary">
+  <button mat-icon-button (click)="toggleSidenav()" class="mobile-menu-button">
+    <mat-icon>menu</mat-icon>
+  </button>
   <div class="navbar-left">
     <img src="assets/LUCLAND-NO-BAK-WHITE.png" alt="Logo" class="navbar-logo">
     <span class="navbar-title">CONTROL DE PUNTOS</span>
   </div>
   <span class="spacer"></span>
   <span class="centered-content" *ngIf="welcomeMessage"><strong>{{ welcomeMessage }}</strong></span>
-  <span class="spacer"></span>
-  <div class="navbar-right">
-    <a mat-button (click)="navigateToHome()">Celadores</a>
-    <a mat-button (click)="navigateToEmpalmadores()">Empalmadores</a>
-    <a mat-button (click)="navigateToHistorico()">Historico cel</a>
-    <a mat-button (click)="navigateToHistoricoEmpalmadores()">Historico emp</a>
-    <a mat-button (click)="navigateToNormas()">Normas</a>
-    <a mat-button (click)="navigateToLogin()">Login</a>
-  </div>
 </mat-toolbar>
-  
+
+<mat-sidenav-container [ngClass]="{'expanded': isSidenavOpen, 'collapsed': !isSidenavOpen}" class="sidenav-container">
+  <mat-sidenav #sidenav class="mobile-menu" mode="over" (opened)="onSidenavOpen()" (closed)="onSidenavClose()">
+    <a mat-list-item (click)="navigateToHome()" style="margin-left: 5%;">Celadores</a>
+    <br>
+    <a mat-list-item (click)="navigateToEmpalmadores()" style="margin-left: 5%;">Empalmadores</a>
+    <br>
+    <a mat-list-item (click)="navigateToHistorico()" style="margin-left: 5%;">Historico cel</a>
+    <br>
+    <a mat-list-item (click)="navigateToHistoricoEmpalmadores()" style="margin-left: 5%;">Historico emp</a>
+    <br>
+    <a mat-list-item (click)="navigateToNormas()" style="margin-left: 5%;">Normas</a>
+    <br>
+    <a mat-list-item (click)="navigateToLogin()" style="margin-left: 5%;">Login</a>
+  </mat-sidenav>
+</mat-sidenav-container>

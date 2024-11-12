@@ -83,6 +83,7 @@ processData(data: any) {
       puntos: row[2]
     });
     this.puntosTotales[cuadrilla] += puntos;
+    this.puntosTotales[cuadrilla] = parseFloat(this.puntosTotales[cuadrilla].toFixed(2));
   });
   this.cdr.detectChanges();
 }
