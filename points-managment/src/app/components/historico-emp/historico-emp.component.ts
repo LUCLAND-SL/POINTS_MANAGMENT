@@ -54,7 +54,7 @@ export class HistoricoEmpComponent {
   }
 
   readExcel() {
-    const url = 'assets/PuntosTrabajadores2024.xlsx';
+    const url = 'assets/PuntosTrabajadores2025.xlsx';
     this.http.get(url, { responseType: 'arraybuffer' }).subscribe((data: ArrayBuffer) => {
       const arr = Array.from(new Uint8Array(data));
       const bstr = String.fromCharCode.apply(null, arr);

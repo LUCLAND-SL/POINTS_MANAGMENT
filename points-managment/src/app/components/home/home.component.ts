@@ -70,7 +70,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   readExcel() {
-    const url = 'assets/PuntosTrabajadores2024.xlsx';
+    const url = 'assets/PuntosTrabajadores2025.xlsx';
     this.http.get(url, { responseType: 'arraybuffer' }).subscribe((data: ArrayBuffer) => {
       const arr = Array.from(new Uint8Array(data));
       const bstr = String.fromCharCode.apply(null, arr);
@@ -108,7 +108,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   getPuntosRestantes(cuadrilla: string): number {
-    const puntosRestantes = 860 - this.puntosTotales[cuadrilla]; 
+    const puntosRestantes = 430 - this.puntosTotales[cuadrilla]; 
     return parseFloat(puntosRestantes.toFixed(2));
   }
 

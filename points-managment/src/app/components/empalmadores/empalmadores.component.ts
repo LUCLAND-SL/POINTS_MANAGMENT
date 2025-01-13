@@ -55,7 +55,7 @@ ngOnInit(): void {
 }
 
 readExcel() {
-  const url = 'assets/PuntosTrabajadores2024.xlsx';
+  const url = 'assets/PuntosTrabajadores2025.xlsx';
   this.http.get(url, { responseType: 'arraybuffer' }).subscribe((data: ArrayBuffer) => {
     const arr = Array.from(new Uint8Array(data));
     const bstr = String.fromCharCode.apply(null, arr);
@@ -93,7 +93,7 @@ getCuadrillasKeys(): string[] {
 }
 
 getPuntosRestantes(cuadrilla: string): number {
-  const puntosRestantes = 460 - this.puntosTotales[cuadrilla];
+  const puntosRestantes = 345 - this.puntosTotales[cuadrilla];
   return parseFloat(puntosRestantes.toFixed(2));
 }
 
